@@ -1,0 +1,7 @@
+# Heart-rate decomposition model statistics
+
+Two additional regressions are needed to calculate the physiological benchmark. The first estimates the change in the temperature gap after adjustment for local start hour. The second estimates the temperature and speed response during steady-speed segments using session temperature and running speed as exposures. The design and outcome files contain whole-cohort cross-products after removing runner effects and nuisance covariates.
+
+The public analysis solves those regressions and combines them with the Table 2 estimates of the thermal gap, speed and whole-session heart rate. It evaluates the splines at the cohort reference temperature and speed using the values in `constants.csv`. The reported percentage reduction is 100 times one minus the predicted response with observed timing and speed divided by the response at unchanged start hour.
+
+`coefficient_covariance.csv` gives the pooled covariance within the physiological model and between the thermal-gap models with and without hour controls. The delta-method calculation follows the manuscript's covariance specification and holds the other model blocks independent. The two CSV cross-product matrices use per-session averages, which leave their regression coefficients unchanged. [Analysis code](../../../scripts/heart_rate_decomposition.R) · [Preparation from licensed panels](../../../scripts/prepare/build_decomposition_statistics.R).

@@ -1,0 +1,10 @@
+outcome,estimate,lower,upper,reference
+outdoor_running,-0.17,-1.48,1.14,Table S14 panel A column 3
+treadmill_running,-0.14,-0.33,0.06,Table S14 panel A column 3
+indoor_cycling,0.47,0.14,0.80,Table S14 panel A column 3
+walking_hiking,0.61,-0.24,1.46,Table S14 panel A column 3
+indoor_training,0.04,-0.44,0.51,Table S14 panel A column 3
+swimming,0.44,0.11,0.77,Table S14 panel A column 3
+indoor_all,0.31,-0.31,0.92,Table S14 panel A column 3
+cycling_recreation,3.11,2.02,4.21,Manuscript Results on alternative workouts
+cycling_transport,1.00,0.45,1.56,Manuscript Results on alternative workouts

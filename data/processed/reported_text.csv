@@ -1,0 +1,19 @@
+section,quantity,printed
+Abstract,sessions,106600
+Abstract,runners,820
+Abstract,P50 temperature,15.4
+Abstract,P95 temperature,30.5
+Abstract,paired sessions,18626
+Abstract,steady HR increase,1.49
+Abstract,whole-session HR increase,0.68
+Abstract,paired HR difference,0.81
+Abstract,paired HR difference lower,0.29
+Abstract,paired HR difference upper,1.33
+Abstract,earlier start (minutes),29
+Abstract,slower than mean speed (%),1
+Abstract,timing and speed offset (%),30
+Abstract,outdoor cycling (pp),4.0
+Results,temperature range near P95,9.4
+Results,temperature range near P50,6.7
+Results,sessions with isolated spikes (%),3.4
+Results,sessions with identical sequences (%),1.4

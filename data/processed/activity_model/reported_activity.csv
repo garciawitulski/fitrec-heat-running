@@ -1,0 +1,9 @@
+model,target,contrast,estimate,lower,upper,digits
+any_sport,P95,day,3.83,2.44,5.23,2
+outdoor_cycling,P95,day,3.97,2.81,5.13,2
+running_lags,P95,cumulative_0_7,-1.77,-3.29,-0.24,2
+running_lags,P95,sum_minus3_minus1,1.11,0.00,2.21,2
+weekly_runs,band,30_plus,-0.015,-0.035,0.004,3
+weekly_minutes,band,30_plus,-1.96,-3.39,-0.53,2
+weekly_km,band,30_plus,-0.41,-0.65,-0.18,2
+weekly_any_workouts,band,30_plus,0.064,0.017,0.111,3

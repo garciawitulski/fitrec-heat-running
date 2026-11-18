@@ -1,0 +1,31 @@
+name: Reproduce from a clean checkout
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  reproduce:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Install R and data.table
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends r-base-core r-cran-data.table
+      - name: Run the analysis from outside the checkout
+        working-directory: ${{ runner.temp }}
+        env:
+          FITREC_OUTPUT: ${{ runner.temp }}/fitrec-results
+        run: Rscript --vanilla "$GITHUB_WORKSPACE/run.R"
+      - name: Check expected outputs
+        env:
+          OUT: ${{ runner.temp }}/fitrec-results
+        run: |
+          test -s "$OUT/models/paired_heart_rate.csv"
+          test -s "$OUT/validation/table2_printed.csv"
+          test -s "$OUT/tables/supplementary/table_S29.html"
+          test "$(find "$OUT/tables" -name '*.html' | wc -l)" -eq 31

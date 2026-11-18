@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: "Use this citation when referring to the FitRec replication code."
+type: software
+title: "Replication code for Behavioural and heart-rate responses to heat in recreational runners: evidence from wearable data"
+authors:
+  - family-names: García-Witulski
+    given-names: Christian
+repository-code: "https://github.com/garciawitulski/fitrec-heat-running"

@@ -1,0 +1,15 @@
+# Participation and other workouts
+
+The public analysis refits seven models using pooled normal equations and covariance matrices. The two daily activity models estimate the probability of recording any sport or an outdoor ride. The distributed-lag model estimates the probability of a heart-rate run as a function of the daily maximum from seven days before through three days after the date of observation. The four weekly models estimate running frequency, running time, distance and total workouts in complete ISO weeks. [Analysis script](../../../scripts/activity_models.R).
+
+`pooled_matrices.csv` gives each distinct element of the within-runner design cross-product and the CR1-adjusted score covariance. `pooled_vectors.csv` gives the design–outcome cross-products. Daily models remove seasonal and weekday terms. Weekly models remove seasonal terms. The public script solves the normal equations for the coefficients and applies the sandwich formula for their covariance. The calculation extends the same method used for Table 2 to the jointly estimated lag and temperature-band terms. [Formula and notation](../model_statistics/README.md).
+
+Figure 6a uses the refitted distributed-lag model. Its points show the estimated change in running on each individual day. Its line sums the estimates from the hot day onwards using the full covariance matrix. Figure 6b uses the public refits for any sport and outdoor cycling. Its other nine categories use already released estimates and confidence intervals from Table S14 or the manuscript text, recorded at their displayed precision in `published_sports.csv`. Filled points show refits and open points show estimates reported in the paper in that panel. The source is also recorded for every row of `figure6_activity_types.csv`.
+
+The daily activity-type panel includes 729 runners. For the lag and weekly models, the manuscript reports at least 720 runners from that panel. The public script calculates the confidence limits and p values over the resulting range of degrees of freedom. The weekly contrasts replace a day at 10–20 °C with a day in the stated band. The file `reported_activity.csv` gives the published point estimate and confidence limits for eight contrasts from the Results and Tables S11–S14. All 24 displayed fields agree across the possible confidence limits.
+
+The builder takes four authorized Parquet files as arguments. The input tables contain sessions, runner-days, workout metadata and daily weather for lagged exposures. It reconstructs workout dates, weekly totals and temperature lags. It checks that at least ten runners contribute to every released aggregate moment and to each nonempty overlap of eligibility and the two released activity categories. The generated files contain neither runner-level scores nor dates or locations. [Preparation code](../../../scripts/prepare/build_activity_statistics.R).
+
+```sh
+Rscript --vanilla scripts/prepare/build_activity_statistics.R sessions.parquet runner_days.parquet workout_metadata.parquet daily_weather.parquet data/processed/activity_model
+```
