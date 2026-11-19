@@ -1,14 +1,14 @@
-# Compare the paired models with Table S4 and the decomposition with Figure 5.
+# Compare the paired models with Table S13 and the decomposition with Figure 3.
 # For paired confidence limits, use the range allowed by the reported runner count.
 local({
   figure_data <- file.path(repo,"data","published","figures")
   paired <- fread(file.path(public_out,"models","paired_heart_rate.csv"))
-  s4_rows <- data.table(row=c(6L,7L,8L,37L,38L,39L),
+  paired_rows <- data.table(row=c(6L,7L,8L,37L,38L,39L),
     quantity=c("steady_fixed_speed","steady_speed_free","whole_session_mean",
                "steady_speed_free_minus_whole_session","steady_fixed_speed_minus_whole_session",
                "fixed_speed_minus_speed_free"))
   cells <- fread(file.path(repo,"data","published","table_cells.csv"))
-  reported <- merge(s4_rows,cells[table_id=="S4" & column %in% 2:3,.(row,column,text)],by="row")
+  reported <- merge(paired_rows,cells[table_id=="S13" & column %in% 2:3,.(row,column,text)],by="row")
   reported[,target:=ifelse(column==2L,"P90","P95")]
   numbers <- strsplit(gsub("[(),]"," ",chartr("\u2212","-",reported$text)),"[[:space:]]+")
   values <- t(vapply(numbers,as.numeric,numeric(3)))
@@ -19,13 +19,13 @@ local({
     round(lower_conservative,2)<=printed_lower & printed_lower<=round(lower_at_max_df,2) &
     round(upper_at_max_df,2)<=printed_upper & printed_upper<=round(upper_conservative,2)]
   decomp <- fread(file.path(public_out,"models","heart_rate_decomposition.csv"))
-  levels <- fread(file.path(figure_data,"figure5_stages.csv"))
+  levels <- fread(file.path(figure_data,"figure3_stages.csv"))
   setnames(levels,c("series","estimate"),c("quantity","reference"))
   stages <- merge(decomp[target=="P95"],levels,by="quantity",all.y=TRUE)
   stopifnot(nrow(stages)==5L,!anyNA(stages))
   stages[,matches:=abs(estimate-reference)<1e-7 & abs(lower-ci_low)<1e-6 & abs(upper-ci_high)<1e-6]
-  # The abstract reports the difference in paired responses to two decimal
-  # places, and the reduction from timing and speed to a whole percentage.
+  # The article reports the paired difference to two decimal places and
+  # the reduction associated with timing and speed to a whole percentage.
   headline <- rbindlist(list(
     z[target=="P95" & quantity=="steady_speed_free_minus_whole_session",
       .(quantity,estimate,reference=0.81,matches=round(estimate,2)==0.81 &

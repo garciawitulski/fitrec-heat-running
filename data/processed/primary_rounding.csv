@@ -1,5 +1,5 @@
 table,model,outcome,target,statistic,intermediate,unit_multiplier,python_display,source
-S3,registered,gps_speed_median_m_s,30v20,p_holm,0.0065,1,0.006,Prespecified outcome estimates
-S3,registered,session_day_percentile,30v20,lower,-0.0875,100,-8.8,Prespecified outcome estimates
-S28,runner_month,speed_cv_60s,P95,estimate,0.0005,1,0.001,Within-run activity sensitivity estimates
-S28,runner_month,speed_cv_60s,P95,upper,0.0055,1,0.005,Within-run activity sensitivity estimates
+S12,registered,gps_speed_median_m_s,30v20,p_holm,0.0065,1,0.006,Estimates with calendar-year indicators
+S12,registered,session_day_percentile,30v20,lower,-0.0875,100,-8.8,Estimates with calendar-year indicators
+S2,runner_month,speed_cv_60s,P95,estimate,0.0005,1,0.001,Within-run activity sensitivity estimates
+S2,runner_month,speed_cv_60s,P95,upper,0.0055,1,0.005,Within-run activity sensitivity estimates

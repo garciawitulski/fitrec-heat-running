@@ -1,4 +1,4 @@
-# Figure 5, Tables S8 and S10. Resample runners jointly across all outcome models.
+# Figure 3, Tables S5 and S18. Resample runners jointly across all outcome models.
 # Duplicating a runner duplicates the same within-runner cross-products. Computing
 # them once gives the refitted fixed-effects model for each bootstrap draw.
 # Native R samples have the same design and replicate count as the Python analysis.
@@ -112,7 +112,7 @@ for (engine in plan_names) {
 }
 message("Runner cluster bootstrap: ",B," complete draws at both temperature contrasts")
 
-# Table S24. On the P50 window recover the participation rate and fit the registered
+# Table S26. On the P50 window recover the participation rate and fit the registered
 # participation model with runner-by-month effects, weekday controls and CR1.
 panel <- read_fitrec("panels/runner_days.parquet",
                     c("user_hash","run","day_max_c","local_weekday","year_month_local"))

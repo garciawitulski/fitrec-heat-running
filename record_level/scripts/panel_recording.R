@@ -1,4 +1,4 @@
-# Table S4 and Figure S3 use the calendar-day panel and workout records prepared in
+# Table S13 and Figure S3 use the calendar-day panel and workout records prepared in
 # 04_participation.R. Workouts are the observations for heart-rate recording, and
 # runner-days are the observations for participation.
 local({

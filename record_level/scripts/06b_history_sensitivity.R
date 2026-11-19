@@ -1,4 +1,4 @@
-# Tables S18–S20. Sessions receive equal weight and errors are clustered by runner.
+# Tables S9, S10 and S23. Sessions receive equal weight and errors are clustered by runner.
 # The reference temperature is P50 in models of ambient heat history and 20 °C
 # in models of prior running time in heat. Each model specifies its cohort and controls.
 local({
@@ -39,7 +39,7 @@ local({
   },by=user_hash]
 
   hist_results <- list()
-  # All Table S18 models use the same contrast. The alternatives vary the heat-history
+  # All Table S9 models use the same contrast. The alternatives vary the heat-history
   # terms, fixed effects or sample of sessions.
   history_rows <- function(d,controls,terms,check,groups=d$user_hash) {
     fit <- fit_fe(d$y,as.matrix(d[,..controls]),groups,d$user_hash)
@@ -135,7 +135,7 @@ local({
   compare_aggregate(results,expected,
                     c("history_model","check","history_term","quantity","target_label"),fields,"06b_history_sensitivity")
 
-  # Table S19. Fit both models on sessions with an observed fitness index. To estimate
+  # Table S10. Fit both models on sessions with an observed fitness index. To estimate
   # uncertainty in their difference, retain each runner's contribution to both fits.
   ok <- is.finite(phys$fitness_index)
   runner <- phys$user_hash[ok]
@@ -189,7 +189,7 @@ local({
   compare_aggregate(test,as.data.table(jsonlite::fromJSON(input_file(reference_dir,"warm_season_test.json"))),
                     "test",c("F_statistic","p_value"),"06b_season_joint")
 
-  # Table S20. Define exposure tertiles across all sessions eligible for that exposure,
+  # Table S23. Define exposure tertiles across all sessions eligible for that exposure,
   # then fit the model in the steady-speed subcohort.
   prior <- read_fitrec("cohort/session_weather.parquet",
                        c("session_hash","user_hash","minutes_ge25","prior_history_complete_A","temp_c_10km"))
@@ -227,7 +227,7 @@ local({
                      mde_80pct=(qnorm(.975)+qnorm(.8))*recorded[temperature_c==28 & contrast=="C",se])
   fwrite(desc,file.path(out,"06b_prior_recorded_counts.csv"))
 
-  # The prespecified pooled-cohort model adds calendar-year indicators.
+  # The pooled-cohort sensitivity model adds calendar-year indicators.
   # Appendix B.4.3 reports the difference at 28 °C.
   year <- as.integer(format(as.POSIXct(phys$canonical_start_utc,origin="1970-01-01",tz="UTC"),"%Y"))
   yr <- model.matrix(~factor(year))[, -1L,drop=FALSE]

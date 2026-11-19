@@ -53,7 +53,7 @@ local({
       }
       page <- c(page,"</tbody></table></div>")
     }
-    page <- c(page,paste0("<p class='note'><strong>Note:</strong> ",escape(catalog$note[i]),
+    page <- c(page,paste0("<p class='note'><strong>Note.</strong> ",escape(catalog$note[i]),
                           "</p></body></html>"))
     writeLines(enc2utf8(page),file.path(destination,paste0("table_",id,".html")),useBytes=TRUE)
     # The CSV retains each panel's original column headings as rows.

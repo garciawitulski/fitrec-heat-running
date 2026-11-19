@@ -1,4 +1,4 @@
-# Technical checks for the competing heart-rate measurements (Tables S4, S5 and S9).
+# Technical checks for the competing heart-rate measurements (Tables S13, S14 and S17).
 # Each fit below uses the precomputed session measurements and one observation per
 # session. Exclusions for a missing outcome are specific to that outcome.
 hr_contrasts <- function(fit, id, session = FALSE) {

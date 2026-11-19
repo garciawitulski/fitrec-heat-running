@@ -25,7 +25,9 @@ You need R. The `--install` option installs the one required package, `data.tabl
 | All manuscript and supplementary tables | Render the released cells at their reported precision, including counts disclosed as lower bounds. Each table is available as HTML and CSV. | [Table rendering](scripts/tables.R) |
 | Figures | Draw Figure 6 from the activity analysis and redraw nine other numerical figures from the released aggregate series. The study diagram and the geographic map are included as rendered images. | [Figure rendering](scripts/figures.R) |
 
-The regressions use small matrices of sums over the cohort. These retain the information needed to fit the registered temperature coefficients after adjustment for runner effects and other covariates. Cluster score products supply the uncertainty estimates. For cohorts whose exact runner count is protected, the scripts calculate the range of confidence limits and p values consistent with the disclosed counts. All 81 printed values in Table 2 agree across those ranges. Changing the cohort, adding predictors or resampling individual runners requires the underlying records. [Data and methods](data/README.md).
+The regressions use small matrices of sums over the cohort. These retain the information needed to estimate the temperature coefficients after adjustment for runner effects and other covariates. Cluster score products supply the uncertainty estimates. For cohorts whose exact runner count is protected, the scripts calculate the range of confidence limits and p values consistent with the disclosed counts. All 81 printed values in Table 2 agree across those ranges. Changing the cohort, adding predictors or resampling individual runners requires the underlying records. [Data and methods](data/README.md).
+
+In the Table S12 output, the code identifier `registered` denotes the session models with additional calendar-year indicators. The daily participation outcome uses runner-by-year-month fixed effects in both columns.
 
 ## Find an output
 

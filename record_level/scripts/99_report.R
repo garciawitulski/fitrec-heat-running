@@ -23,8 +23,8 @@ local({
   checked$heart <- x[,.(n=.N),by=.(block=paste0("heart_",basename(source_file)),status)]
   x <- fread(file.path(out,"weather_verification.csv"))
   checked$weather <- x[,.(n=.N),by=.(block=paste0("weather_",source),status)]
-  x <- fread(file.path(out,"figure3_verification.csv"))
-  checked$descriptive <- x[,.(n=.N),by=.(block=paste0("fig3_",block),status)]
+  x <- fread(file.path(out,"figure2_verification.csv"))
+  checked$descriptive <- x[,.(n=.N),by=.(block=paste0("fig2_",block),status)]
   x <- fread(file.path(out,"cohort_flow.csv"))
   checked$flow <- x[,.(n=.N),by=status][,block:="S1_cohort_stages"]
   if (file.exists(file.path(out,"figure_S1_aggregate_audit.csv"))) {

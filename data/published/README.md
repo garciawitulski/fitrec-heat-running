@@ -10,15 +10,15 @@ These files contain the table entries and aggregate figure series from the paper
 
 ## Figures
 
-`scripts/figures.R` redraws nine numerical figures in R using the files in `figures/`. Estimates and confidence limits in these files are aggregate plotting values. They can have more decimal places than the corresponding tables. For the paired analyses, whole-session heart-rate models, and recording or sensitivity models with a protected runner count, the released t-based limits use the published lower bound on the number of runners. This applies to Figures 2, 4, 5, S3, S5 and S6. All affected limits agree with the original at two decimal places. The model estimates retain their original values. The Figure S4 histogram reports the share of sessions in each one-degree bin to the nearest 0.1 percentage point. The new PDF layout can differ from the manuscript artwork. The two remaining illustrations are flattened PNGs of the manuscript figures.
+`scripts/figures.R` redraws nine numerical figures in R using the files in `figures/`. Estimates and confidence limits in these files are aggregate plotting values. They can have more decimal places than the corresponding tables. For the paired analyses, whole-session heart-rate models, and recording or sensitivity models with a protected runner count, the released t-based limits use the published lower bound on the number of runners. This applies to Figures 3–5, S3, S5 and S6. All affected limits agree with the original at two decimal places. The model estimates retain their original values. The Figure S4 histogram reports the share of sessions in each one-degree bin to the nearest 0.1 percentage point. The new PDF layout can differ from the manuscript artwork. The two remaining illustrations are flattened PNGs of the manuscript figures.
 
 | Figure | Distributed source | What the script displays |
 | --- | --- | --- |
 | 1 | `fig1_design.png` | Copies the study design diagram. |
-| 2 | `figure2_paired.csv` | Within-run heart-rate contrasts at the 90th and 95th temperature percentiles. |
-| 3 | `figure3_hourly.csv`, `figure3_daily_temperature.csv`, `figure3_daily_participation.csv` | Hourly temperature and start-time profiles, session temperatures, and weekday and weekend running. The disclosed bin counts retain their released rounding. |
-| 4 | `figure4_primary.csv`, `figureS2_curves.csv`, `figure3_daily_temperature.csv` | Four outcome curves, the fixed-hour comparison for heat avoided, and the distribution across released two-degree temperature bins. |
-| 5 | `figure5_stages.csv`, `figure5_stages_curve.csv`, `figure5_checks.csv` | The heart-rate decomposition, its change with temperature and the alternative measurements and specifications. The floating bars show the differences between adjacent stages. |
+| 2 | `figure2_hourly.csv`, `figure2_daily_temperature.csv`, `figure2_daily_participation.csv` | Hourly temperature and start-time profiles, session temperatures, and weekday and weekend running. The disclosed bin counts retain their released rounding. |
+| 3 | `figure3_stages.csv`, `figure3_stages_curve.csv`, `figure3_checks.csv` | The heart-rate decomposition, its change with temperature and the alternative measurements and specifications. The floating bars show the differences between adjacent stages. |
+| 4 | `figure4_paired.csv` | Within-run heart-rate contrasts at the 90th and 95th temperature percentiles. |
+| 5 | `figure5_primary.csv`, `figureS2_curves.csv`, `figure2_daily_temperature.csv` | Four outcome curves, the fixed-hour comparison for heat avoided, and the distribution across released two-degree temperature bins. |
 | 6 | [Activity models](../processed/activity_model/README.md) | The activity script plots its refitted daily and cumulative changes in running and labels the refitted and reported estimates for other workouts. |
 | S1 | `supp_fig1_map.png` | Copies the geographic summary as a single image. The repository includes no spatial source file for this map. |
 | S2 | `figureS2_curves.csv` | Heat avoided, start-time shifts and within-day temperature rank. |

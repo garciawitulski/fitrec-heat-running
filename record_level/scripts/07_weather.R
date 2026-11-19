@@ -1,4 +1,4 @@
-# Tables S6, S22–S23 and S26–S27. Each pair of models uses the same observations.
+# Tables S15, S24, S25, S28 and S29. Each pair of models uses the same observations.
 # The standard error of the difference accounts for the runners shared by both models.
 
 local({

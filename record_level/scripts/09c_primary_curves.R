@@ -1,4 +1,4 @@
-# Figure 4 and Supplementary Figure 2. The fixed-hour model adds indicators for
+# Figure 5 and Supplementary Figure S2. The fixed-hour model adds indicators for
 # local start hour. The uncertainty in the difference is based on the joint
 # covariance of the two models, clustered by runner.
 local({
@@ -41,7 +41,7 @@ local({
   calc[,temperature:=round(temperature,7)]
   setnames(paper,c("ci_low","ci_high","p_value"),c("lower","upper","p"))
   measures <- c("estimate","lower","upper","p")
-  checks <- list(compare_aggregate(calc,paper,c("outcome","temperature"),measures,"09c_fig4"))
+  checks <- list(compare_aggregate(calc,paper,c("outcome","temperature"),measures,"09c_fig5"))
   paper_fixed <- fread(input_file(workdir,"fixed_hour_curves.csv"))
   setnames(paper_fixed,c("ci_low","ci_high","p_value"),c("lower","upper","p"))
   paper_fixed[,temperature:=round(exposure_c,7)]
@@ -59,7 +59,7 @@ local({
   ylabels <- c("Session minus maximum temperature (°C)","Median running speed (m/s)",
                "Run duration (%)","Mean heart rate (beats/min)")
   cols <- c("#1F5974","#2A715A","#8A6334","#A14346")
-  pdf(file.path(out,"figure4_primary_outcomes.pdf"),width=10,height=7,useDingbats=FALSE)
+  pdf(file.path(out,"figure5_primary_outcomes.pdf"),width=10,height=7,useDingbats=FALSE)
   tryCatch({
     par(mfrow=c(2,2),mar=c(4,4.3,2,1))
     counts <- hist(daily$day_max_c,breaks=seq(floor(min(daily$day_max_c)/2)*2,

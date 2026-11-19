@@ -133,7 +133,7 @@ for (lab in c("P90", "P95")) {
 hr_paired_rows <- rbindlist(hr_paired_rows)
 fwrite(hr_paired_rows, file.path(out, "heart_paired.csv"))
 
-# Tables S8–S9 and Figure 5. Decompose the heart-rate response at a fixed start hour
+# Tables S5 and S17 and Figure 3. Decompose the heart-rate response at a fixed start hour
 # and as timing and speed vary. Estimate the mean thermal gap on a day at P50.
 hr_reference_basis <- as.numeric(rcs_basis(hr_targets[["P50"]], hr_kday)) - colMeans(hr_xmain[, c("T1","T2")])
 hr_gap_mean <- mean(hr_main$heat_avoided_c)
@@ -181,7 +181,7 @@ hr_dec <- rbindlist(lapply(c("P90", "P95"), function(lab)
     hr_decomposition(hr_models, hr_targets[[lab]])[, target_label := lab]))
 fwrite(hr_dec, file.path(out, "heart_decomposition.csv"))
 
-# Table S10. Relate predicted heart rate at the observed start times to the observed
+# Table S18. Relate predicted heart rate at the observed start times to the observed
 # whole-session mean. Use joint covariance across all models, including across samples.
 hr_chain <- hr_stack(c(list(gap = hr_gap, phys = hr_phfit), hr_pair_models, list(net = hr_net)))
 hr_chain_rows <- list()

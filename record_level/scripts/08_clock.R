@@ -1,4 +1,4 @@
-# Table S7. First, measure start time relative to sunrise.
+# Table S16. First, measure start time relative to sunrise.
 # Then compare sessions before and after a clock change in the time zone of the run.
 local({
   dir <- "covariates"

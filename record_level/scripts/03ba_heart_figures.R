@@ -1,4 +1,4 @@
-# Heat, heart rate and place (Table S9). The usual cell is identified before
+# Heat, heart rate and place (Table S17). The usual cell is identified before
 # excluding sessions with missing daily weather. Ties go to the smaller cell ID.
 cell_counts <- hr_all[!is.na(cell_10km),.N,by=.(user_hash,cell_10km)]
 setorder(cell_counts,user_hash,-N,cell_10km)
@@ -47,7 +47,7 @@ curve <- rbindlist(lapply(grid,function(value)
     hr_decomposition(hr_models,value)[,exposure_c:=value]))
 fwrite(curve,file.path(out,"heart_decomposition_curves.csv"))
 
-# Figure 2. Matched levels and paired differences; separate marks for P90/P95.
+# Figure 4. Matched levels and paired differences; separate marks for P90/P95.
 blue <- "#21688A"
 amber <- "#BF5735"
 fig_paired <- function(keys,labels,title) {
@@ -64,7 +64,7 @@ fig_paired <- function(keys,labels,title) {
     }
     legend("bottomright",legend=c("P90","P95"),pch=c(21,19),col=blue,pt.bg="white",bty="n",horiz=TRUE,cex=.85)
 }
-pdf(file.path(out,"figure_2_heart_rate.pdf"),width=9.2,height=6,useDingbats=FALSE)
+pdf(file.path(out,"figure_4_heart_rate.pdf"),width=9.2,height=6,useDingbats=FALSE)
 par(mfrow=c(2,1),mar=c(3.3,13,2.1,1),mgp=c(1.7,.5,0),family="sans",cex.axis=.89)
 fig_paired(c("steady_fixed_speed","steady_speed_free","whole_session_mean"),
            c("Steady, fixed speed","Steady, speed free","Whole session"),"A   Heart rate in the same runs")
@@ -72,14 +72,14 @@ fig_paired(c("steady_speed_free_minus_whole_session","steady_fixed_speed_minus_w
            c("Speed free minus whole session","Fixed speed minus whole session"),"B   Paired differences")
 invisible(dev.off())
 
-# Figure 5. Fixed-hour benchmark, contrasts along the temperature range and checks.
+# Figure 3. Fixed-hour benchmark, contrasts along the temperature range and checks.
 levels_fig <- c("rise_without_behavioural_change","rise_at_unchanged_clock_hour","rise_with_observed_timing",
                 "predicted_rise_timing_and_speed","net_heart_rate_change")
 labels_fig <- c("Initial benchmark","Fixed hour","Observed timing","Timing and speed","Measured heart rate")
 parts_fig <- hr_dec[target_label=="P95"][match(levels_fig,quantity)]
 cold <- "#0B4E63"
 colors <- c("#70A4B5",cold,"#258D88","#9D7154",amber)
-pdf(file.path(out,"figure_5_decomposition.pdf"),width=11.7,height=8.1,useDingbats=FALSE)
+pdf(file.path(out,"figure_3_decomposition.pdf"),width=11.7,height=8.1,useDingbats=FALSE)
 layout(matrix(c(1,2,3,3),nrow=2,byrow=TRUE),heights=c(1,1.3))
 par(mar=c(5.4,4.4,2.1,.7),mgp=c(2.4,.55,0),family="sans",cex.axis=.86)
 limit <- range(c(0,parts_fig$lower,parts_fig$upper))

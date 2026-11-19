@@ -1,4 +1,4 @@
-# Figure 3. Pool sessions across runners to calculate unadjusted averages.
+# Figure 2. Pool sessions across runners to calculate unadjusted averages.
 local({
   s <- read_fitrec("panels/sessions.parquet",c("user_hash","cell_10km",
     "day_start_utc","day_end_utc","day_max_c","temp_c_10km","heat_avoided_c","start_minutes_local"))[is.finite(day_max_c)]
@@ -96,9 +96,9 @@ local({
   stopifnot(all(participation$bin_low_c==ref_days$bin_low_c),all(participation$weekend==ref_days$weekend))
   for (what in c("runner_days","run_share")) checks[[length(checks)+1L]] <- check("participation_bin",
     paste(participation$bin_low_c,participation$weekend,what),participation[[what]],ref_days[[what]],if(what=="run_share") 4 else 0)
-  fwrite(rbindlist(checks),file.path(out,"figure3_verification.csv"))
+  fwrite(rbindlist(checks),file.path(out,"figure2_verification.csv"))
   # Plot the estimates from this run in the order used in the paper.
-  grDevices::pdf(file.path(out,"figure3_descriptive.pdf"),width=10,height=7)
+  grDevices::pdf(file.path(out,"figure2_descriptive.pdf"),width=10,height=7)
   tryCatch({
     par(mfrow=c(2,2),mar=c(4,4,1.5,1))
     cols <- c("#173D70","#476F9F","#538173","#CB6C46","#8A3030")

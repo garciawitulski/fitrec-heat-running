@@ -42,8 +42,8 @@ local({
   stopifnot(file.copy(file.path(source_data,"fig1_design.png"),file.path(manuscript,"figure_1_design.png"),overwrite=TRUE),
             file.copy(file.path(source_data,"supp_fig1_map.png"),file.path(supplement,"figure_S1_map.png"),overwrite=TRUE))
 
-  paired <- read_series("figure2_paired")
-  draw_pdf(file.path(manuscript,"figure_2_paired.pdf"),8.3,6.0,function() {
+  paired <- read_series("figure4_paired")
+  draw_pdf(file.path(manuscript,"figure_4_paired.pdf"),8.3,6.0,function() {
     par(mfrow=c(2,1),mar=c(3.7,13,2.1,1))
     keys <- c("steady_fixed_speed","steady_speed_free","whole_session_mean",
               "steady_speed_free_minus_whole_session","steady_fixed_speed_minus_whole_session")
@@ -66,12 +66,12 @@ local({
     }
   })
 
-  hours <- read_series("figure3_hourly")
-  bins <- read_series("figure3_daily_temperature")
-  days <- read_series("figure3_daily_participation")
+  hours <- read_series("figure2_hourly")
+  bins <- read_series("figure2_daily_temperature")
+  days <- read_series("figure2_daily_participation")
   bands <- c("le10","10to20","20to25","25to30","gt30")
   labels <- c("<=10","10-20","20-25","25-30",">30")
-  draw_pdf(file.path(manuscript,"figure_3_descriptive.pdf"),10.1,7,function() {
+  draw_pdf(file.path(manuscript,"figure_2_descriptive.pdf"),10.1,7,function() {
     par(mfrow=c(2,2),mar=c(4.0,4.2,2.2,1))
     for (k in 1:2) {
       v <- c("temperature","share")[k]
@@ -96,12 +96,12 @@ local({
     }
     legend("topright",c("Weekdays","Weekends"),col=colours[1:2],lty=1,bty="n",cex=.78)
   })
-  primary <- read_series("figure4_primary")
+  primary <- read_series("figure5_primary")
   fixed <- read_series("figureS2_curves")
   ids <- c("heat_avoided_c","gps_speed_median_m_s","log_duration","hr_mean")
   titles <- c("Heat avoided","Median speed","Duration","Whole-session mean heart rate")
   units <- c("degrees C","m/s","%","beats/min")
-  draw_pdf(file.path(manuscript,"figure_4_primary.pdf"),10,7,function() {
+  draw_pdf(file.path(manuscript,"figure_5_primary.pdf"),10,7,function() {
     par(mfrow=c(2,2),mar=c(4.0,4.2,2.2,1))
     for(j in 1:4) {
       z <- primary[series==ids[j]][order(temperature)]
@@ -117,11 +117,11 @@ local({
       points(pts$temperature,pts$estimate,pch=21,bg="white",col=colours[j])
     }
   })
-  stages <- read_series("figure5_stages")
-  heat <- read_series("figure5_stages_curve")
-  checks <- read_series("figure5_checks")
+  stages <- read_series("figure3_stages")
+  heat <- read_series("figure3_stages_curve")
+  checks <- read_series("figure3_checks")
   stage_labels <- c("Initial benchmark","Fixed hour","Observed timing","Timing and speed","Measured heart rate")
-  draw_pdf(file.path(manuscript,"figure_5_decomposition.pdf"),11.8,8.4,function() {
+  draw_pdf(file.path(manuscript,"figure_3_decomposition.pdf"),11.8,8.4,function() {
     layout(matrix(c(1,2,3,3),2,byrow=TRUE),heights=c(1,1.25))
     par(mar=c(6.7,4,2.3,1))
     level <- stages$estimate

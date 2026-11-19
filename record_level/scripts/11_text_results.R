@@ -43,7 +43,7 @@ local({
     check("Abstract","earlier start (minutes)",-main[outcome=="start_minutes_local",estimate]),
     check("Abstract","slower than mean speed (%)",
           -100*main[outcome=="gps_speed_median_m_s",estimate]/mean(s$gps_speed_median_m_s)),
-    check("Abstract","timing and speed offset (%)",percent),
+    check("Results","timing and speed offset (%)",percent),
     check("Abstract","outdoor cycling (pp)",bike),
     check("Results","temperature range near P95",
           s[abs(day_max_c-targets[2])<=1,mean(day_max_c-day_min_c,na.rm=TRUE)]),

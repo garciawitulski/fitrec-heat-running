@@ -1,4 +1,4 @@
-# Participation and other activities (Figure 6 and Tables S11–S14).
+# Participation and other activities (Figure 6 and Tables S19–S22).
 # Give each runner-day or complete ISO runner-week equal weight. Daily contrasts
 # compare P90 and P95 with P50. Weekly contrasts replace one day at 10–20 °C
 # with one day in another temperature band. Days without workouts count as zero.

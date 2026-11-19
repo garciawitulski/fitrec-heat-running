@@ -1,26 +1,26 @@
 table,model,outcome,target,statistic,note
-S25,era5,heat_avoided_c,P95,estimate,The ERA5 specification changes the exposure and retains the original definition of the temperature gap.
-S25,era5,heat_avoided_c,P95,lower,The ERA5 specification changes the exposure and retains the original definition of the temperature gap.
-S25,era5,heat_avoided_c,P95,upper,The ERA5 specification changes the exposure and retains the original definition of the temperature gap.
-S25,hinge,heat_avoided_c,P95,estimate,The registered hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
-S25,hinge,heat_avoided_c,P95,lower,The registered hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
-S25,hinge,heat_avoided_c,P95,upper,The registered hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
-S25,hinge,gps_speed_median_m_s,P95,estimate,The registered hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
-S25,hinge,gps_speed_median_m_s,P95,lower,The registered hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
-S25,hinge,gps_speed_median_m_s,P95,upper,The registered hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
-S25,hinge,log_duration,P95,estimate,The registered hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
-S25,hinge,log_duration,P95,lower,The registered hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
-S25,hinge,log_duration,P95,upper,The registered hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
-S25,hinge,hr_mean,P95,estimate,The registered hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
-S25,hinge,hr_mean,P95,lower,The registered hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
-S25,hinge,hr_mean,P95,upper,The registered hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
-S25,history,heat_avoided_c,P95,estimate,Sessions must have a measure of prior activity minutes. The complete-history flag uses a separate criterion.
-S25,history,heat_avoided_c,P95,lower,Sessions must have a measure of prior activity minutes. The complete-history flag uses a separate criterion.
-S25,history,heat_avoided_c,P95,upper,Sessions must have a measure of prior activity minutes. The complete-history flag uses a separate criterion.
-S25,history,log_duration,P95,upper,Sessions must have a measure of prior activity minutes. The complete-history flag uses a separate criterion.
-S25,history,hr_mean,P95,lower,Sessions must have a measure of prior activity minutes. The complete-history flag uses a separate criterion.
-S25,equal_runner,hr_mean,P95,estimate,For each runner the weight is the inverse of the number of sessions with an observed outcome.
-S25,equal_runner,hr_mean,P95,lower,For each runner the weight is the inverse of the number of sessions with an observed outcome.
-S25,equal_runner,hr_mean,P95,upper,For each runner the weight is the inverse of the number of sessions with an observed outcome.
-S28,runner_month,speed_cv_60s,P95,estimate,The table displays three decimal places from an intermediate CSV published to four decimal places.
-S28,runner_month,speed_cv_60s,P95,upper,The table displays three decimal places from an intermediate CSV published to four decimal places.
+S27,era5,heat_avoided_c,P95,estimate,The ERA5 specification changes the exposure and retains the original definition of the temperature gap.
+S27,era5,heat_avoided_c,P95,lower,The ERA5 specification changes the exposure and retains the original definition of the temperature gap.
+S27,era5,heat_avoided_c,P95,upper,The ERA5 specification changes the exposure and retains the original definition of the temperature gap.
+S27,hinge,heat_avoided_c,P95,estimate,The hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
+S27,hinge,heat_avoided_c,P95,lower,The hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
+S27,hinge,heat_avoided_c,P95,upper,The hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
+S27,hinge,gps_speed_median_m_s,P95,estimate,The hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
+S27,hinge,gps_speed_median_m_s,P95,lower,The hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
+S27,hinge,gps_speed_median_m_s,P95,upper,The hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
+S27,hinge,log_duration,P95,estimate,The hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
+S27,hinge,log_duration,P95,lower,The hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
+S27,hinge,log_duration,P95,upper,The hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
+S27,hinge,hr_mean,P95,estimate,The hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
+S27,hinge,hr_mean,P95,lower,The hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
+S27,hinge,hr_mean,P95,upper,The hinge model has zero slope below 20 °C and uses the positive part of temperature minus 20 °C.
+S27,history,heat_avoided_c,P95,estimate,Sessions must have a measure of prior activity minutes. The complete-history flag uses a separate criterion.
+S27,history,heat_avoided_c,P95,lower,Sessions must have a measure of prior activity minutes. The complete-history flag uses a separate criterion.
+S27,history,heat_avoided_c,P95,upper,Sessions must have a measure of prior activity minutes. The complete-history flag uses a separate criterion.
+S27,history,log_duration,P95,upper,Sessions must have a measure of prior activity minutes. The complete-history flag uses a separate criterion.
+S27,history,hr_mean,P95,lower,Sessions must have a measure of prior activity minutes. The complete-history flag uses a separate criterion.
+S27,equal_runner,hr_mean,P95,estimate,For each runner the weight is the inverse of the number of sessions with an observed outcome.
+S27,equal_runner,hr_mean,P95,lower,For each runner the weight is the inverse of the number of sessions with an observed outcome.
+S27,equal_runner,hr_mean,P95,upper,For each runner the weight is the inverse of the number of sessions with an observed outcome.
+S2,runner_month,speed_cv_60s,P95,estimate,The table displays three decimal places from an intermediate CSV published to four decimal places.
+S2,runner_month,speed_cv_60s,P95,upper,The table displays three decimal places from an intermediate CSV published to four decimal places.

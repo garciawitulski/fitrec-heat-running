@@ -1,7 +1,7 @@
 # Figure S6. The 12 rows in each panel show the main model and the
 # eleven alternative specifications in the supplement.
 local({
-  est <- fread(file.path(out,"supp_session.csv"))[table=="S25" & target=="P95"]
+  est <- fread(file.path(out,"supp_session.csv"))[table=="S27" & target=="P95"]
   specs <- c("main","daily_mean","era5","20km","two_way","runner_month","dew",
              "duration_20_180","at_least_20","hinge","four_knots","history")
   labels <- c("Main specification","Daily mean temperature","ERA5 0.25° reanalysis",

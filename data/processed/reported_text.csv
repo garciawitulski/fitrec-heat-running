@@ -11,7 +11,7 @@ Abstract,paired HR difference lower,0.29
 Abstract,paired HR difference upper,1.33
 Abstract,earlier start (minutes),29
 Abstract,slower than mean speed (%),1
-Abstract,timing and speed offset (%),30
+Results,timing and speed offset (%),30
 Abstract,outdoor cycling (pp),4.0
 Results,temperature range near P95,9.4
 Results,temperature range near P50,6.7

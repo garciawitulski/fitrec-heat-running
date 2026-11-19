@@ -65,7 +65,7 @@ local({
   compare_aggregate(rbindlist(joint_weekend),
                     test_ref[model_id %in% names(outcomes) & test=="weekend_by_exposure_interaction"],
                     "model_id",c("F_statistic","p_value"),"06_weekend_joint")
-  # Table S21 reports these four adjusted p-values to three decimal places.
+  # Table S11 reports these four adjusted p-values to three decimal places.
   printed <- data.table(model_id=names(outcomes),p_holm=c(.096,1,1,.046))
   compare_aggregate(weekend[target_label=="P95" & contrast=="R_weekend_minus_weekday"],printed,
                     "model_id","p_holm","06_weekend_holm_printed",tolerance=.00050001)

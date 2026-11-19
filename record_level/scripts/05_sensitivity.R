@@ -11,7 +11,7 @@ year_indicators <- model.matrix(~year)[,-1,drop=FALSE]
 d95 <- target_basis[3,]-target_basis[1,]
 results_alt <- list()
 
-# Table S2. The first nested model has a common intercept and no runner fixed effects.
+# Table S3. The first nested model has a common intercept and no runner fixed effects.
 for (k in 1:4) {
   X <- switch(k,cbind(intercept=1,temperature_basis),
               cbind(intercept=1,X_session),X_session,cbind(X_session,year_indicators))
@@ -20,11 +20,11 @@ for (k in 1:4) {
     v <- outcomes$outcome[j]
     mod <- fit_fe(sessions[[v]],X,fe,runner)
     results_alt[[length(results_alt)+1L]] <- save_contrast(mod,d95,outcomes$transform[j],
-                                                           "S2",as.character(k),v,"P95")
+                                                           "S3",as.character(k),v,"P95")
   }
 }
 
-# Table S25. Each row changes one component of the main model from Table 2.
+# Table S27. Each row changes one component of the main model from Table 2.
 specs <- c("main","daily_mean","era5","20km","two_way","runner_month","dew",
            "duration_20_180","at_least_20","hinge","four_knots","history","levels_time",
            "levels_distance","equal_runner","daily_mean_own")
@@ -71,17 +71,17 @@ for (spec in specs) {
     if (v==vars[1L]) {
       # The table reports behavioural sample sizes. Apply the disclosure rule
       # that rounds these counts down to the nearest ten.
-      results_alt[[length(results_alt)+1L]] <- data.table(table="S25",model=spec,outcome="sample",
+      results_alt[[length(results_alt)+1L]] <- data.table(table="S27",model=spec,outcome="sample",
           target="sample",n_sessions=10*floor(mod$n/10),n_runners=10*floor(mod$groups/10))
     }
     for (i in 2:3) {
       results_alt[[length(results_alt)+1L]] <- save_contrast(mod,b_targets[i,]-b_targets[1,],u,
-                                           "S25",spec,v,c("P90","P95")[i-1L])
+                                           "S27",spec,v,c("P90","P95")[i-1L])
     }
   }
 }
 
-# Table S28. Walking, pauses and variability in running speed.
+# Table S2. Walking, pauses and variability in running speed.
 comp <- read_fitrec("panels/composition.parquet",
                     c("session_hash","median_interval_s","walk_share_20_pct","walk_share_15_pct",
                       "pause_share_pct","speed_cv_60s"))
@@ -93,11 +93,11 @@ for (v in c("walk_share_20_pct","walk_share_15_pct","pause_share_pct","speed_cv_
     X <- if (spec=="runner_month") cbind(temperature_basis,weekday) else X_session
     fe <- if (spec=="runner_month") ym else runner
     mod <- fit_fe(comp[[v]][select],X[select,,drop=FALSE],fe[select],runner[select])
-    results_alt[[length(results_alt)+1L]] <- data.table(table="S28",model=spec,outcome=v,
+    results_alt[[length(results_alt)+1L]] <- data.table(table="S2",model=spec,outcome=v,
           target="sample",n_sessions=10*floor(mod$n/10),n_runners=10*floor(mod$groups/10))
     for (i in 2:3) {
       result <- save_contrast(mod,target_basis[i,]-target_basis[1,],"identity",
-                              "S28",spec,v,c("P90","P95")[i-1L])
+                              "S2",spec,v,c("P90","P95")[i-1L])
       result[,mean_outcome:=mean(comp[[v]][select][mod$keep])]
       results_alt[[length(results_alt)+1L]] <- result
     }
