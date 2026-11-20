@@ -39,8 +39,7 @@ edge_parts <- rbindlist(lapply(c("P90","P95"),function(label)
     hr_decomposition(models_edge,hr_targets[[label]],mean(edge$heat_avoided_c),edge_basis)[,target_label:=label]))
 fwrite(edge_parts,file.path(out,"heart_edge_decomposition.csv"))
 
-# Complete registered temperature grid; the three percentile anchors join the
-# 0.5-degree sequence. Fractions at the median have zero denominators.
+# Add P90 and P95 to the temperature grid at half-degree intervals.
 env <- hr_config$plot_envelope
 grid <- sort(unique(c(seq(ceiling(env[1]*2)/2,floor(env[2]*2)/2,by=.5),hr_targets[c("P90","P95")])))
 curve <- rbindlist(lapply(grid,function(value)

@@ -160,7 +160,8 @@ local({
   rm(lag_x,complete_days,weather,fit)
   gc()
 
-  # Temperature bands for the weekly and daily models.
+  # "run" counts a day with at least one recorded run with heart rate data.
+  # "runs" sums those days within a week, while "any_workouts" counts workouts.
   bin_results <- list()
   for (y in c("runs","minutes","km","any_workouts","run")) {
     weekly <- y!="run"

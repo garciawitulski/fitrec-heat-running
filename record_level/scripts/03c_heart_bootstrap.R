@@ -112,8 +112,8 @@ for (engine in plan_names) {
 }
 message("Runner cluster bootstrap: ",B," complete draws at both temperature contrasts")
 
-# Table S26. On the P50 window recover the participation rate and fit the registered
-# participation model with runner-by-month effects, weekday controls and CR1.
+# Table S26. Calculate the participation rate near P50 and fit the daily model
+# with runner-by-month effects, weekday indicators and runner-clustered standard errors.
 panel <- read_fitrec("panels/runner_days.parquet",
                     c("user_hash","run","day_max_c","local_weekday","year_month_local"))
 panel <- panel[is.finite(day_max_c)]

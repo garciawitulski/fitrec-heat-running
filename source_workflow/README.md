@@ -1,6 +1,6 @@
 # Rebuild the FitRec cohort from the original records
 
-Run these commands from the repository root. This workflow starts with the two unmodified UC San Diego archives. It reproduces the FitRec source counts and the first row of supplementary Table S1, before weather linkage. A subsequent step prepares the initial Copernicus hourly weather requests.
+These scripts reconstruct the first row of Table S1 from the two original FitRec archives, before linking the sessions to weather. They also prepare the initial requests for hourly weather from Copernicus. Run the commands below from the top-level directory of the repository.
 
 ## Get the original files and reconstruct the cohort
 
@@ -14,7 +14,7 @@ python -B source_workflow/02_source_counts.py --cohort
 
 The R script downloads both archives from UC San Diego and validates their sizes and SHA-256 hashes. If you already have the original files, pass their directory as an argument to the R script and use `--raw-dir DIRECTORY` with the Python script. Use these records in accordance with the provider's academic-use terms. Source and attribution: [FitRec dataset](https://cseweb.ucsd.edu/~jmcauley/datasets/fitrec.html), [Ni, Muhlstein and McAuley (2019)](https://doi.org/10.1145/3308558.3313643).
 
-The Python reader handles the provider's serialized Python dictionaries, matches the workout and metadata records, and checks the elapsed-time clock against UTC at each reading. For simultaneous records from the same runner it checks sensor traces, routes and time spans, then applies the prespecified event-selection and geographic criteria. It writes one aggregate CSV to `outputs/validation/source_counts.csv`. Expect 117,781 running workouts with confirmed clocks from 863 runners, and 115,036 eligible geolocated running sessions from 862 runners before weather linkage. Use `--output FILE` to change the aggregate output path. Omitting `--cohort` runs just the source linkage and clock checks.
+The Python reader handles the provider's serialized Python dictionaries, matches the workout and metadata records, and checks the elapsed-time clock against UTC at each reading. For simultaneous records from the same runner it checks sensor traces, routes and time spans, then applies the session and location criteria described in Appendix A.1. It writes one aggregate CSV to `outputs/validation/source_counts.csv`. Expect 117,781 running workouts with confirmed clocks from 863 runners, and 115,036 eligible geolocated running sessions from 862 runners before weather linkage. Use `--output FILE` to change the aggregate output path. Omitting `--cohort` runs just the source linkage and clock checks.
 
 ## Generate the initial weather requests
 
@@ -41,8 +41,8 @@ python -B source_workflow/04_fetch_weather.py era5 --limit 1 --download
 
 The check verifies the variables, units, coordinates, hourly axis and finite temperature values, including responses in NetCDF or ZIP format. Downloaded files stay in `data/processed/local/weather/`. [CDS API setup](https://cds.climate.copernicus.eu/how-to-api), [ERA5-Land hourly time series](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land-timeseries), [ERA5 hourly time series](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels-timeseries).
 
-## Coverage
+## What these steps reproduce
 
-Running the steps above on the original FitRec release reproduced all 13 source and cohort checks. The resulting 6,903 ERA5-Land and 3,896 ERA5 request definitions matched the archived first-stage requests individually, including the dataset, variables, coordinates and date ranges. The response reader was tested against three original Copernicus responses from each product. No new hourly download was needed for these checks.
+The original FitRec files reproduce all 13 checks on linkage and cohort selection. Each of the 6,903 ERA5-Land and 3,896 ERA5 requests matches the dataset, variables, coordinates and date range used in the initial weather retrieval.
 
-This source workflow ends with the initial weather acquisition. The published analysis also used 343 follow-up ERA5-Land requests after inspecting hourly availability, constructed exposures and physiological outcomes, and assembled training histories and daily follow-up. These later record-level data preparation steps are outside this workflow. Reproducing the development and confirmation samples requires the runner assignments used in the study. The repository's main README describes the analyses available from the included aggregate inputs and the optional models that use prepared records.
+The scripts in this directory stop after the initial weather requests. For the paper, I made another 343 ERA5-Land requests to complete hourly coverage, linked the weather to individual runs and constructed the steady-speed segments, training histories and daily follow-up. To refit the models from individual records, you need those prepared panels and, for analyses of the development and confirmation samples, the original runner assignments. [Guide to the record-level analysis](../record_level/README.md).

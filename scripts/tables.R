@@ -38,6 +38,13 @@ local({
       stopifnot(nrow(p)>0L, p$role[1]=="header", any(p$role=="data"))
       if (nzchar(p$panel[1])) page <- c(page,paste0("<h2>",escape(p$panel[1]),"</h2>"))
       page <- c(page,"<div class='scroll'><table><thead>")
+      # Show each Table 2 interval under its change, retaining separate limits in the CSV.
+      if (id == "2") {
+        page <- c(page, "<tr><th></th><th>P90 vs P50</th><th colspan='3'>P95 vs P50</th></tr>",
+                  "<tr><th>Outcome</th><th>Change<br>[95% CI]</th><th>Change<br>[95% CI]</th>",
+                  "<th>Nominal <i>p</i></th><th>Holm<sup>a</sup> <i>p</i></th></tr>")
+        p <- p[role != "header"]
+      }
       ended_header <- FALSE
       for (j in unique(p$row)) {
         row <- p[row==j][order(column)]
@@ -49,6 +56,16 @@ local({
         tag <- if (kind=="data") "td" else "th"
         scope <- if (kind=="header") ifelse(row$span>1," scope='colgroup'"," scope='col'") else ""
         html_cells <- paste0("<",tag,scope," colspan='",row$span,"'>",escape(row$text),"</",tag,">")
+        if (id == "2" && kind == "data") {
+          stopifnot(nrow(row) == 9L)
+          value <- escape(row$text)
+          changes <- sprintf("<td>%s<br><small>[%s, %s]</small></td>",
+                             value[c(2,5)], value[c(3,6)], value[c(4,7)])
+          html_cells <- c(html_cells[1], changes, html_cells[8:9])
+        }
+        if (id == "2" && kind == "section") {
+          html_cells <- paste0("<th colspan='5' scope='rowgroup'>", escape(row$text), "</th>")
+        }
         page <- c(page,paste0("<tr class='",kind,"'>",paste(html_cells,collapse=""),"</tr>"))
       }
       page <- c(page,"</tbody></table></div>")

@@ -27,8 +27,9 @@ local({
     par(mfrow=c(1,2),mar=c(4.5,4.3,3,0.8),las=1,mgp=c(2.6,.6,0),cex.axis=.86,bty="l")
     limits <- 100*range(daily$day_ci_low,daily$day_ci_high,cumulative$cumulative_ci_low,cumulative$cumulative_ci_high)
     plot(NA,xlim=c(-3.2,7.2),ylim=limits,xlab="Days from the hot day",ylab="",
-         main="a   Heart-rate runs around a hot day",xaxt="n",cex.main=1)
-    mtext("Change in daily run probability (percentage points)",side=2,line=2.8,las=0,cex=.84)
+         main="a   Days with a recorded run",xaxt="n",cex.main=1)
+    mtext("A day counts if at least one recorded run has heart rate data.",side=3,line=.2,cex=.72)
+    mtext("Change in runner-days per 100 windows",side=2,line=2.8,las=0,cex=.84)
     axis(1,at=-3:7)
     abline(h=0,col="grey60",lty=3)
     abline(v=0,col="grey75",lty=3)
@@ -36,7 +37,7 @@ local({
     lines(cumulative$day_relative_to_hot_day,100*cumulative$cumulative_estimate,col=blue,lwd=2)
     with(daily,segments(day_relative_to_hot_day,100*day_ci_low,day_relative_to_hot_day,100*day_ci_high,col="grey38"))
     points(daily$day_relative_to_hot_day,100*daily$day_estimate,pch=21,col="grey25",bg="white",cex=.8)
-    legend("topright",legend=c("Individual day","Cumulative"),pch=c(21,NA),pt.bg="white",lty=c(NA,1),
+    legend("topright",legend=c("Daily (percentage points)","Cumulative from day 0"),pch=c(21,NA),pt.bg="white",lty=c(NA,1),
            col=c("grey25",blue),bty="n",lwd=c(1,2),cex=.78)
     par(mar=c(4.5,8,3,.9))
     pos <- rev(seq_len(nrow(sport)))

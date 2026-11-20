@@ -48,6 +48,7 @@ d[,complete_week:=.N==7L,by=.(user_hash,iso_week)]
 bins <- c("below_0","0_10","20_25","25_30","30_plus")
 d[, (bins):=list(day_max_c<0,day_max_c>=0 & day_max_c<10,day_max_c>=20 & day_max_c<25,
                  day_max_c>=25 & day_max_c<30,day_max_c>=30)]
+# Each runner-day contributes at most once to "runs", even if it includes several runs.
 weekly <- d[complete_week==TRUE,c(list(runs=sum(run),minutes=sum(minutes),km=sum(km),
   any_workouts=sum(any_workouts),south=first(south),time=mean(time)),lapply(.SD,sum)),
   by=.(user_hash,iso_week),.SDcols=bins]

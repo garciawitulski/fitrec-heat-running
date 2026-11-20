@@ -35,8 +35,9 @@ local({
       if (id!="running_lags") {
         contrasts[[paste(targets[i],"day",sep="/")]] <- delta
       } else {
-        # An isolated hotter day affects a single-day contrast at each lag.
-        # The sum 0:j gives the cumulative number of runs through follow-up day j.
+        # Each day is counted once if the runner recorded at least one run with
+        # heart rate data. The sum from day 0 to j gives the change in runner-days
+        # with a run per 100 windows of j + 1 days (eight days when j = 7).
         day <- -3:7
         pieces <- list()
         for (j in day) pieces[[paste0("day_",j)]] <- j
@@ -92,21 +93,22 @@ local({
   sports <- sports[row_index]
   fwrite(sports,file.path(tables,"figure6_activity_types.csv"))
 
-  # Figure 6a shows the conservative end of the very narrow range of possible
-  # confidence limits. For Fig. 6b, filled points identify the two public refits.
+  # Figure 6a uses the outer confidence limits allowed by the reported runner counts.
   profile <- all_models[model=="running_lags" & target=="P95" & startsWith(contrast,"day_")]
   cumulative <- all_models[model=="running_lags" & target=="P95" & startsWith(contrast,"cumulative_")]
   pdf(file.path(figures,"figure_6_participation.pdf"),width=12,height=5.5,useDingbats=FALSE)
   tryCatch({
     par(mfrow=c(1,2),mar=c(4.5,4.5,2.5,1))
     plot(-3:7,profile$estimate,ylim=range(profile$lower_min,profile$upper_max,cumulative$lower_min,cumulative$upper_max),
-      type="n",xlab="Days relative to the hot day",ylab="Change per 100 hot days",main="a. Recorded runs")
+      type="n",xlab="Days relative to the hot day",ylab="Change in runner-days per 100 windows",
+      main="a. Days with a recorded run")
+    mtext("A day counts if at least one recorded run has heart rate data.",side=3,line=.2,cex=.7)
     abline(h=0,lty=3)
     polygon(c(0:7,7:0),c(cumulative$lower_min,rev(cumulative$upper_max)),border=NA,col="#C6DCE7")
     lines(0:7,cumulative$estimate,lwd=2,col="#2B5D79")
     segments(-3:7,profile$lower_min,-3:7,profile$upper_max)
     points(-3:7,profile$estimate,pch=21,bg="white")
-    legend("topright",c("Daily","Cumulative"),lty=c(NA,1),pch=c(1,NA),bty="n",cex=.8)
+    legend("topright",c("Daily (percentage points)","Cumulative from day 0"),lty=c(NA,1),pch=c(1,NA),bty="n",cex=.8)
     par(mar=c(4.5,8.5,2.5,1))
     pos <- rev(seq_len(nrow(sports)))
     plot(range(sports$lower,sports$upper),range(pos)+c(-.5,.5),type="n",yaxt="n",ylab="",

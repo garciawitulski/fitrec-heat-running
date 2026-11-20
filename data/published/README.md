@@ -1,16 +1,16 @@
 # Aggregate source data for the tables and figures
 
-These files contain the table entries and aggregate figure series from the paper and its supplement. The default replication run reads them locally. The main repository README explains which statistical analyses can be fitted from the distributed data.
+These are the printed entries for the tables and the aggregate data used to draw the figures. The [main README](../../README.md) lists the models that can also be fitted from the data in the repository.
 
 ## Tables
 
-`table_catalog.csv` gives each table's English title and note. `table_cells.csv` contains the displayed text for main Tables 1 and 2 and Supplementary Tables S1–S29. Columns identify the table, panel, row, row type, starting column and number of columns the cell spans. An entry such as ≥100 retains the reporting bound. The strings preserve the manuscript's printed precision, so decimal places, interval limits and footnote symbols survive a round trip through the renderer.
+`table_catalog.csv` gives each table's English title and note. `table_cells.csv` contains the displayed text for main Tables 1 and 2 and Supplementary Tables S1–S29. Columns identify the table, panel, row, row type, starting column and number of columns the cell spans. An entry such as ≥100 retains the reporting bound. The text preserves the decimal places, confidence limits and footnote symbols shown in the paper.
 
-`scripts/tables.R` rebuilds each table as an HTML page and a CSV. The HTML contains the column groups, panels and note. In the CSV, the original headings appear as rows within each panel. These are display-level reproductions. For example, rebuilding the display for Table 2 uses its printed values, while the separate public model workflow calculates estimates and compares them with the reported results.
+`scripts/tables.R` rebuilds each table as an HTML page and a CSV. The HTML contains the column groups, panels and note. In the CSV, the original headings appear as rows within each panel. To recalculate the estimates for Table 2, use the [temperature models](../../scripts/temperature_models.R). Their output is checked against the printed values.
 
 ## Figures
 
-`scripts/figures.R` redraws nine numerical figures in R using the files in `figures/`. Estimates and confidence limits in these files are aggregate plotting values. They can have more decimal places than the corresponding tables. For the paired analyses, whole-session heart-rate models, and recording or sensitivity models with a protected runner count, the released t-based limits use the published lower bound on the number of runners. This applies to Figures 3–5, S3, S5 and S6. All affected limits agree with the original at two decimal places. The model estimates retain their original values. The Figure S4 histogram reports the share of sessions in each one-degree bin to the nearest 0.1 percentage point. The new PDF layout can differ from the manuscript artwork. The two remaining illustrations are flattened PNGs of the manuscript figures.
+`scripts/figures.R` redraws nine numerical figures in R using the files in `figures/`. Estimates and confidence limits in these files are aggregate plotting values. They can have more decimal places than the corresponding tables. For the paired analyses, whole-session heart-rate models, and recording or sensitivity models with a protected runner count, the released t-based limits use the published lower bound on the number of runners. This applies to Figures 3–5, S3, S5 and S6. All affected limits agree with the original at two decimal places. The model estimates retain their original values. The Figure S4 histogram reports the share of sessions in each one-degree bin to the nearest 0.1 percentage point. The PDF layouts can differ from the figures in the paper. Figure 1 and Figure S1 are supplied as PNG images.
 
 | Figure | Distributed source | What the script displays |
 | --- | --- | --- |
@@ -19,7 +19,7 @@ These files contain the table entries and aggregate figure series from the paper
 | 3 | `figure3_stages.csv`, `figure3_stages_curve.csv`, `figure3_checks.csv` | The heart-rate decomposition, its change with temperature and the alternative measurements and specifications. The floating bars show the differences between adjacent stages. |
 | 4 | `figure4_paired.csv` | Within-run heart-rate contrasts at the 90th and 95th temperature percentiles. |
 | 5 | `figure5_primary.csv`, `figureS2_curves.csv`, `figure2_daily_temperature.csv` | Four outcome curves, the fixed-hour comparison for heat avoided, and the distribution across released two-degree temperature bins. |
-| 6 | [Activity models](../processed/activity_model/README.md) | The activity script plots its refitted daily and cumulative changes in running and labels the refitted and reported estimates for other workouts. |
+| 6 | [Activity models](../processed/activity_model/README.md) | Daily probability of recording a run with heart rate data, cumulative change in days with such a run, and changes in the probability of recording other activities. |
 | S1 | `supp_fig1_map.png` | Copies the geographic summary as a single image. The repository includes no spatial source file for this map. |
 | S2 | `figureS2_curves.csv` | Heat avoided, start-time shifts and within-day temperature rank. |
 | S3 | `figureS3_recording.csv` | Run recording and availability of heart-rate measurements. |

@@ -1,6 +1,6 @@
 # Tables S3, S4 and S12 use the models fitted in scripts 02 and 03.
-# These models include calendar-year indicators.
-registered <- list()
+# Compare nested adjustments and report the temperature range for each sample.
+model_rows <- list()
 yr <- function(t) factor(format(as.POSIXct(t,origin="1970-01-01",tz="UTC"),"%Y",tz="UTC"))
 pm_year <- model.matrix(~yr(hr_phys$canonical_start_utc))[,-1,drop=FALSE]
 p95 <- setNames(hr_spline_change(hr_stargets["P95"],hr_stargets["P50"],hr_ksession),c("T1","T2"))
@@ -12,32 +12,33 @@ for (k in 1:4) {
               hr_xphys,cbind(hr_xphys,pm_year))
   fe <- if (k>=3) hr_phys$user_hash else NULL
   fit <- fit_fe(hr_phys$hr_lag60,X,fe,hr_phys$user_hash)
-  registered[[length(registered)+1L]] <- save_contrast(fit,p95,"identity","S3",as.character(k),"fixed_hr","P95")
-  if (k==4) phys_registered <- fit
+  model_rows[[length(model_rows)+1L]] <- save_contrast(fit,p95,"identity","S3",as.character(k),"fixed_hr","P95")
+  if (k==4) phys_with_year <- fit
 }
 
+# The reference tables call the year-adjusted model "registered".
 # Temperature contrasts for panels A and B. Apply Holm's correction to the family of 30 versus 20 °C tests.
-fits_registered <- list()
+fits_with_year <- list()
 for (j in seq_len(nrow(outcomes))) {
   v <- outcomes$outcome[j]
   fit <- if (v=="run") main_fits$run else fit_fe(sessions[[v]],cbind(X_session,year_indicators),runner,runner)
-  fits_registered[[v]] <- fit
+  fits_with_year[[v]] <- fit
   for (label in c("main","registered")) {
     m <- if (label=="main") main_fits[[v]] else fit
-    registered[[length(registered)+1L]] <- save_contrast(m,d95,outcomes$transform[j],"S12",label,v,"P95")
+    model_rows[[length(model_rows)+1L]] <- save_contrast(m,d95,outcomes$transform[j],"S12",label,v,"P95")
   }
   for (target in names(anchor)) {
     diff <- rcs_basis(anchor[[target]],temperature_knots)[1,]-rcs_basis(20,temperature_knots)[1,]
-    registered[[length(registered)+1L]] <- save_contrast(fit,diff,outcomes$transform[j],"S12","registered",v,target)
+    model_rows[[length(model_rows)+1L]] <- save_contrast(fit,diff,outcomes$transform[j],"S12","registered",v,target)
   }
 }
 for (label in c("main","registered")) {
-  fit <- if (label=="main") hr_phfit else phys_registered
-  registered[[length(registered)+1L]] <- save_contrast(fit,p95,"identity","S12",label,"fixed_hr","P95")
+  fit <- if (label=="main") hr_phfit else phys_with_year
+  model_rows[[length(model_rows)+1L]] <- save_contrast(fit,p95,"identity","S12",label,"fixed_hr","P95")
 }
 for (target in names(anchor)) {
   diff <- setNames(hr_spline_change(anchor[[target]],20,hr_ksession),c("T1","T2"))
-  registered[[length(registered)+1L]] <- save_contrast(phys_registered,diff,"identity","S12","registered","fixed_hr",target)
+  model_rows[[length(model_rows)+1L]] <- save_contrast(phys_with_year,diff,"identity","S12","registered","fixed_hr",target)
 }
 weekend <- as.numeric(sessions$weekend)
 interaction <- temperature_basis*weekend
@@ -48,12 +49,12 @@ for (j in 1:4) {
   term <- colnames(interaction)
   coef <- fit$beta[term]
   wald <- as.numeric(crossprod(coef,solve(fit$vcov[term,term],coef))) / length(term)
-  registered[[length(registered)+1L]] <- data.table(table="S12",model="weekend_diff",outcome=v,target="joint",
+  model_rows[[length(model_rows)+1L]] <- data.table(table="S12",model="weekend_diff",outcome=v,target="joint",
                                                     p=pf(wald,length(term),fit$df,lower.tail=FALSE))
   for (target in names(anchor)) {
     diff <- rcs_basis(anchor[[target]],temperature_knots)[1,]-rcs_basis(20,temperature_knots)[1,]
     names(diff) <- colnames(interaction)
-    registered[[length(registered)+1L]] <- save_contrast(fit,diff,outcomes$transform[j],"S12","weekend_diff",v,target)
+    model_rows[[length(model_rows)+1L]] <- save_contrast(fit,diff,outcomes$transform[j],"S12","weekend_diff",v,target)
   }
 }
 
@@ -61,8 +62,8 @@ for (j in 1:4) {
 # independent covariance blocks for the thermal gap, speed, heart rate and physiology.
 b <- rcs_basis(20,temperature_knots)[1,]-colMeans(temperature_basis)
 change <- rcs_basis(30,temperature_knots)[1,]-rcs_basis(20,temperature_knots)[1,]
-fits_parts <- list(gap=fits_registered$heat_avoided_c,pace=fits_registered$gps_speed_median_m_s,
-                   net=fits_registered$hr_mean,phys=phys_registered)
+fits_parts <- list(gap=fits_with_year$heat_avoided_c,pace=fits_with_year$gps_speed_median_m_s,
+                   net=fits_with_year$hr_mean,phys=phys_with_year)
 for (key in c("gap","pace","net")) {
   m <- fits_parts[[key]]
   idx <- match(c("linear","cubic1"),names(m$beta))
@@ -72,7 +73,7 @@ for (key in c("gap","pace","net")) {
 blocks <- hr_stack(fits_parts)
 group <- sub("\\..*$","",names(blocks$beta))
 blocks$vcov[outer(group,group,"!=")] <- 0
-planned_parts <- function(beta) {
+decomposition_terms <- function(beta) {
   gap <- beta[c("gap.T1","gap.T2")]
   gap0 <- mean(sessions$heat_avoided_c)+sum(b*gap)
   speed <- sum(change*beta[c("pace.T1","pace.T2")])
@@ -85,12 +86,12 @@ planned_parts <- function(beta) {
   c(ref_temp=20+gap0,gap=g,speed=speed,benchmark=bench,timing=timed,slower=slow,
     expected=timed+slow,net=net,offset_timing=1-timed/bench,offset_total=1-net/bench)
 }
-pc <- hr_delta(planned_parts,blocks$beta,blocks$vcov)
-registered[[length(registered)+1L]] <- pc[,.(table="S12",model="decomposition",outcome=quantity,target="30v20",
+pc <- hr_delta(decomposition_terms,blocks$beta,blocks$vcov)
+model_rows[[length(model_rows)+1L]] <- pc[,.(table="S12",model="decomposition",outcome=quantity,target="30v20",
                                               estimate,lower,upper,p)]
-reg <- rbindlist(registered,fill=TRUE)
-reg[,p_holm:=NA_real_]
-reg[table=="S12" & model=="registered" & target=="30v20" & outcome %in% outcomes$outcome[1:4],p_holm:=p.adjust(p,"holm")]
+model_contrasts <- rbindlist(model_rows,fill=TRUE)
+model_contrasts[,p_holm:=NA_real_]
+model_contrasts[table=="S12" & model=="registered" & target=="30v20" & outcome %in% outcomes$outcome[1:4],p_holm:=p.adjust(p,"holm")]
 
 # Table S4A. Compute exposure percentiles within the corresponding sample.
 percentiles <- c(.01,.10,.50,.90,.95,.99)
@@ -116,4 +117,4 @@ for (key in names(sample_support)) {
                                         target=c("P90","P95")[i-1L],estimate=as.numeric(rounded))
   }
 }
-fwrite(rbindlist(c(list(reg),support_rows),fill=TRUE),file.path(out,"supp_registered.csv"))
+fwrite(rbindlist(c(list(model_contrasts),support_rows),fill=TRUE),file.path(out,"supp_registered.csv"))

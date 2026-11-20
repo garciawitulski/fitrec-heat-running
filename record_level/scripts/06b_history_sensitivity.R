@@ -233,10 +233,10 @@ local({
   yr <- model.matrix(~factor(year))[, -1L,drop=FALSE]
   fyear <- fit_fe(phys$hr_lag60,cbind(x,yr),phys$user_hash,phys$user_hash)
   delta <- as.numeric(diff(rcs_basis(c(20,28),config$knots$session_temp_rcs3)))
-  prereg <- contrast_panel(fyear,setNames(delta,c("H1","H2")))[, `:=`(model_id="main",temperature_c=28,contrast="C")]
-  fwrite(prereg,file.path(out,"06b_prior_registered.csv"))
+  year_adjusted <- contrast_panel(fyear,setNames(delta,c("H1","H2")))[, `:=`(model_id="main",temperature_c=28,contrast="C")]
+  fwrite(year_adjusted,file.path(out,"06b_prior_registered.csv"))
   ref <- read_fitrec("history/prior_exercise/contrasts_full_precision.parquet")
-  compare_aggregate(prereg,ref[model_id=="main" & temperature_c==28 & contrast=="C"],
+  compare_aggregate(year_adjusted,ref[model_id=="main" & temperature_c==28 & contrast=="C"],
                     c("model_id","temperature_c","contrast"),fields,"06b_prior_registered")
   # The holdout model includes a linear temperature term above 20 °C and a linear
   # speed term. It omits training and seasonal controls.
